@@ -10,51 +10,56 @@
  */
 class Solution {
 public:
-    ListNode* sortList(ListNode* head) {
-        ListNode* temp=head;
-        if(temp==NULL){
-            return nullptr;
-        }
-        if(head->next==NULL){
+    ListNode* middleList(ListNode* head) {
+
+        if(head==NULL || head->next==NULL){
             return head;
         }
+        ListNode* fast=head;
+        ListNode* slow=head;
+        ListNode* prev = nullptr;
 
-        int count=0;
-        ListNode* temp1=head;
-        while(temp1!=NULL){
-            count++;
-            temp1=temp1->next;
+        while(fast!=NULL && fast->next!=NULL && fast->next->next!=NULL){
+            prev=slow;
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        
-        ListNode* dummy=head;
-        vector<int>arr(count);
-        for(int i=0;i<count;i++){
-            arr[i]=dummy->val;
-            dummy=dummy->next;
+        return slow;
+    }
+
+    ListNode* mergeList(ListNode* list1, ListNode* list2) {
+        if(list1==NULL){
+            return list2;
         }
-        sort(arr.begin(),arr.end());
-
-        ListNode* ans=head;
-        for(int j=0;j<count;j++){
-            ans->val=arr[j];
-            ans=ans->next;
+        if(list2==NULL){
+            return list1;
         }
-        return head;
 
+        ListNode* result;
+        if(list1->val<list2->val){
+            result=list1;
+            result->next=mergeList(list1->next,list2); 
+        }
+        else{
+            result=list2;
+            result->next=mergeList(list1,list2->next);
+        }
+        return result;
+    }
 
+    ListNode* sortList(ListNode* head) {
+        if (head == NULL || head->next == NULL) return head;
 
+        ListNode* middle;
+        middle=middleList(head);
 
+        ListNode* right=middle->next;
+        ListNode* left=head;
+        middle->next=NULL;
 
- 
+        ListNode* leftsort=sortList(left);
+        ListNode* rightsort=sortList(right);
 
-        // while(!temp && !temp->next){
-        //     for(int i=0;i<n;i++){
-        //         if(store->val<store->next->val){
-        //         store->val=store->next->val;
-        //         temp=temp->next;
-        //     }
-        // }
-        // return head;
-        
+        return mergeList(leftsort, rightsort);
     }
 };
