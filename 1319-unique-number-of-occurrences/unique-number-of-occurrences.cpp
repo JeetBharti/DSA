@@ -9,9 +9,8 @@ public:
         }
 
         unordered_set<int>st;
-        for(auto &res:mp){
-            int ans=res.second;
-
+        for(auto &a:mp){
+            int ans=a.second;
             if(st.find(ans)!=st.end()){
                 return false;
             }
@@ -19,6 +18,6 @@ public:
                 st.insert(ans);
             }
         }
-        return true;  
+        return true;
     }
 };
