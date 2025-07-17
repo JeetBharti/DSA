@@ -1,20 +1,28 @@
 class Solution {
 public:
     int maximumLength(vector<int>& nums) {
-        int count_even = 0, count_odd = 0;
-        for (int num : nums) {
-            if (num % 2 == 0) count_even++;
-            else count_odd++;
+        int n=nums.size();
+        int counteven=0;
+        int countodd=0;
+
+        for(int i=0;i<n;i++){
+            if(nums[i]%2==0){
+                counteven++;
+            }
+            else{
+                countodd++;
+            }
         }
 
-        int even_dp = 0, odd_dp = 0;
-        for (int num : nums) {
-            if (num % 2 == 0)
-                even_dp = max(even_dp, odd_dp + 1);
-            else
-                odd_dp = max(odd_dp, even_dp + 1);
+        int parity=nums[0]%2;
+        int alternating=1;
+        for(int i=1;i<n;i++){
+            int next=nums[i]%2;
+            if(parity!=next){
+                alternating++;
+                parity=next;
+            }
         }
-
-        return max({count_even, count_odd, even_dp, odd_dp});
+        return max({alternating,countodd,counteven});
     }
 };
