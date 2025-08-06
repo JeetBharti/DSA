@@ -5,11 +5,6 @@ public:
         int left=0;
         int right=n-1;
 
-        if(n==1 && nums[0]==target){
-            return 0;
-
-        }
-
         while(left<=right){
             int mid=left+(right-left)/2;
             if(nums[mid]==target){
