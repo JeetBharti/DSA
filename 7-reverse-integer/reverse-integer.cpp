@@ -6,7 +6,6 @@ public:
 
         while(num!=0){
             int n=num%10;
-            
             if(rev>INT_MAX/10 || rev<INT_MIN/10){
                 return 0;
             }
