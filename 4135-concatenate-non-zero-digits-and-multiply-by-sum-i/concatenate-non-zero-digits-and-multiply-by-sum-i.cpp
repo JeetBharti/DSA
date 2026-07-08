@@ -1,19 +1,20 @@
 class Solution {
 public:
     long long sumAndMultiply(int n) {
-        long long num=n;
-        long x=0;
-        long y=1;
+        long long num=0;
+        long x=1;
         int sum=0;
-        while(num>0){
-            int rem=num%10;
+        while(n>0){
+            int rem=n%10;
+
             if(rem!=0){
-                x=x+(rem*y);
-                y=y*10;
+                num=num+(rem*x);
+                x=x*10;
                 sum=sum+rem;
             }
-            num=num/10;
+            n=n/10;
         }
-        return x*sum;        
+        return num*sum;
+        
     }
 };
